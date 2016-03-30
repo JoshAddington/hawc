@@ -359,6 +359,7 @@ class SQsCreate(CanCreateMixin, MessageMixin, CreateView):
         for form in self.formset:
             sq = form.save(commit=False)
             sq.content_object = self.study
+            sq.author = self.request.user
             sq.save()
         self.send_message()  # replicate MessageMixin
         return HttpResponseRedirect(self.get_success_url())
