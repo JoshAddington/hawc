@@ -82,7 +82,7 @@ class Study(Reference):
         blank=True,
         verbose_name="Summary and/or extraction comments",
         help_text="Study summary or details on data-extraction needs.")
-    qualities = fields.GenericRelation('RiskOfBias', related_query_name='studies')
+    qualities = fields.GenericRelation('riskofbias.RiskOfBias', related_query_name='studies')
 
     COPY_NAME = "studies"
 
@@ -289,6 +289,7 @@ class Attachment(models.Model):
 
     def get_assessment(self):
         return self.study.assessment
+
 
 reversion.register(Study)
 # reversion.register(StudyQualityDomain)
