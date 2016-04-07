@@ -51,6 +51,10 @@
   <script type="text/javascript">
     $(document).ready(function(){
       $('.html5text').wysihtml5({"stylesheets": false});
+      $('select[name=metric]').on('change', function(){
+          var text = "Update `" + $('#id_metric option:selected').text() + "`";
+          $('legend').text(text);
+      });
     });
   </script>
 {% endblock extrajs %}

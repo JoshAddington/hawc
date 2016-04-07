@@ -108,7 +108,7 @@ class RoBEndpointForm(RoBForm):
     def setHelper(self):
         if self.instance.id:
             inputs = {
-                "legend_text": u"Update {}".format(self.instance),
+                "legend_text": u"Update `{}`".format(self.instance.metric.metric),
                 "help_text":   u"Update a risk-of-bias override.",
             }
         else:
