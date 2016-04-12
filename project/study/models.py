@@ -19,7 +19,6 @@ from assessment.models import Assessment
 from assessment.serializers import AssessmentSerializer
 from lit.models import Reference
 from myuser.models import HAWCUser
-from riskofbias.models import RiskOfBias, RiskOfBiasMetric, RiskOfBiasDomain
 from utils.helper import HAWCDjangoJSONEncoder, SerializerHelper, cleanHTML
 from utils.models import get_crumbs
 
@@ -82,7 +81,6 @@ class Study(Reference):
         blank=True,
         verbose_name="Summary and/or extraction comments",
         help_text="Study summary or details on data-extraction needs.")
-    qualities = fields.GenericRelation('riskofbias.RiskOfBias', related_query_name='studies')
 
     COPY_NAME = "studies"
 
@@ -292,6 +290,3 @@ class Attachment(models.Model):
 
 
 reversion.register(Study)
-# reversion.register(StudyQualityDomain)
-# reversion.register(StudyQualityMetric)
-# reversion.register(StudyQuality)

@@ -33,4 +33,3 @@ class RiskOfBiasSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.RiskOfBias
-        exclude = ('object_id', 'content_type')

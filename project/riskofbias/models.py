@@ -12,12 +12,13 @@ from django.core.urlresolvers import reverse
 from reversion import revisions as reversion
 
 from myuser.models import HAWCUser
+from study.models import Study
 from utils.helper import cleanHTML
 
 
 class RiskOfBiasDomain(models.Model):
     assessment = models.ForeignKey('assessment.Assessment',
-    related_name="sq_domains")
+        related_name="sq_domains")
     name = models.CharField(max_length=128)
     description = models.TextField(default="")
     created = models.DateTimeField(auto_now_add=True)
@@ -128,9 +129,7 @@ class RiskOfBias(models.Model):
         0: "#FFCC00",
     }
 
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-    content_object = fields.GenericForeignKey('content_type', 'object_id')
+    study = models.ForeignKey(Study, related_name='qualities', null=True)
     metric = models.ForeignKey(RiskOfBiasMetric, related_name='qualities')
     score = models.PositiveSmallIntegerField(choices=RISK_OF_BIAS_SCORE_CHOICES, default=4)
     notes = models.TextField(blank=True, default="")
@@ -140,23 +139,20 @@ class RiskOfBias(models.Model):
         related_name='qualities',
         blank=True,
         null=True)
+    conflict_resolution = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ("content_type", "object_id", "metric")
+        ordering = ("metric",)
         verbose_name_plural = "Risk of Biases"
-        unique_together = (("content_type", "object_id", "metric"), )
 
     def __unicode__(self):
         return '{}: {}'.format(self.metric, self.score)
 
     def get_assessment(self):
-        return self.content_object.get_assessment()
+        return self.study.get_assessment()
 
     def get_absolute_url(self):
-        if type(self.content_object) is Study:
-            return reverse('riskofbias:robs_detail', args=[str(self.study.pk)])
-        else:
-            return self.content_object.get_absolute_url()
+        return reverse('riskofbias:robs_detail', args=[str(self.study.pk)])
 
     def get_edit_url(self):
         return reverse('riskofbias:rob_update', args=[self.pk])
@@ -201,3 +197,7 @@ class RiskOfBias(models.Model):
             ser['score_description'],
             ser['score']
         )
+
+reversion.register(RiskOfBiasDomain)
+reversion.register(RiskOfBiasMetric)
+reversion.register(RiskOfBias)
