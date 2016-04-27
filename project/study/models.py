@@ -81,7 +81,6 @@ class Study(Reference):
         blank=True,
         verbose_name="Summary and/or extraction comments",
         help_text="Study summary or details on data-extraction needs.")
-    number_of_reviewers = fields.GenericRelation('riskofbias.RiskOfBiasReviewers', related_query_name='study')
 
     COPY_NAME = "studies"
 
@@ -279,14 +278,6 @@ class Study(Reference):
         else:
             return conflict.scores.all().prefetch_related('metric', 'metric__domain')
 
-    def get_number_of_reviewers(self):
-        if self.number_of_reviewers.exists():
-            return self.number_of_reviewers.first().number
-        else:
-            try:
-                return self.assessment.number_of_reviewers.first().number
-            except ObjectDoesNotExist:
-                return 0
 
 class Attachment(models.Model):
     study = models.ForeignKey(Study, related_name="attachments")
