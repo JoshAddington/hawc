@@ -46,10 +46,10 @@
                 No Risk of Bias
             </td>
             {% else %}
-                {% for rob in study.riskofbiases.all %}
+                {% for rob in study.get_active_riskofbiases %}
                 <td>
-                    {% if rob.rob_reviewer.author %}
-                        {{rob.rob_reviewer.author}}
+                    {% if rob.author %}
+                        {{rob.author}}
                         {% if rob.conflict_resolution %}
                             <i class="fa fa-star"></i>
                         {% endif %}
