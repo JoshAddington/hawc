@@ -55,6 +55,7 @@ class ARoBReviewersList(BaseList):
             context['form_crud'] = 'Update'
         else:
             context['form_crud'] = 'Create'
+        context['rob_count'] = study.assessment.rob_settings.number_of_reviewers + 1
         return context
 
 class ARoBReviewersCreate(BaseCreateWithFormset):

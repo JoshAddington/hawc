@@ -31,10 +31,9 @@
             <th>
                 Study
             </th>
-            <th class="span10">
+            <th colspan="{{ rob_count }}">
                 Reviewers
             </th>
-
         </thead>
         {% endif %}
         <tr>
@@ -47,16 +46,20 @@
             </td>
             {% else %}
                 {% for rob in study.get_active_riskofbiases %}
-                <td>
-                    {% if rob.author %}
-                        {{rob.author}}
-                        {% if rob.conflict_resolution %}
-                            <i class="fa fa-star"></i>
-                        {% endif %}
+                    {% if forloop.last and forloop.counter < rob_count %}
+                        <td colspan="2">
                     {% else %}
-                        No Reviewer
+                        <td>
                     {% endif %}
-                </td>
+                        {% if rob.author %}
+                            {{rob.author}}
+                            {% if rob.conflict_resolution %}
+                                <i class="fa fa-star"></i>
+                            {% endif %}
+                        {% else %}
+                            No Reviewer
+                        {% endif %}
+                    </td>
                 {% endfor %}
             {% endif %}
         </tr>
