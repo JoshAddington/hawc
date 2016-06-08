@@ -27,11 +27,13 @@ def setRiskofbiasStudy(apps, schema_editor):
     RiskOfBias = apps.get_model('riskofbias', 'RiskOfBias')
     ContentTypes = apps.get_model('contenttypes', 'ContentType')
     validateCTCount(RiskOfBias)
-    study_ct_id = ContentTypes.objects.get(app_label='study', model='study').id
-    for rob in RiskOfBias.objects.all():
-        if rob.content_type_id is study_ct_id:
-            rob.study_id = rob.object_id
-        rob.save()
+    study_ct = ContentTypes.objects.filter(app_label='study', model='study').first()
+    if study_ct:
+        study_ct_id = study_ct.id
+        for rob in RiskOfBias.objects.all():
+            if rob.content_type_id is study_ct_id:
+                rob.study_id = rob.object_id
+            rob.save()
 
 
 def revertToStudyContenttype(apps, schema_editor):
