@@ -7,16 +7,27 @@ import './MetricDisplay.css';
 
 class MetricDisplay extends Component {
 
+    renderScoreRow(){
+        let { metric, isForm } = this.props,
+            displayScores = isForm ?
+                _.filter(metric.values, (score) => {return !score.final;}) :
+                metric.values;
+        return (
+            <div className='score-row'>
+            {_.map(displayScores, (score) => {
+                return <ScoreDisplay key={score.id} score={score} />;
+            })}
+            </div>
+        );
+    }
+
     renderScoreForm(){
         let formScore = _.findWhere(this.props.metric.values, {final: true});
         return <ScoreForm ref='form' score={formScore} />;
     }
 
     render(){
-        let { metric, isForm } = this.props,
-            displayScores = isForm ?
-                _.filter(metric.values, (score) => {return !score.final;}) :
-                metric.values;
+        let { metric, isForm } = this.props;
 
         return (
             <div className='metric-display'>
@@ -24,11 +35,7 @@ class MetricDisplay extends Component {
                 <span dangerouslySetInnerHTML={{
                     __html: metric.values[0].metric.description,
                 }} />
-                <div className='score-row'>
-                    {_.map(displayScores, (score) => {
-                        return <ScoreDisplay key={score.id} score={score} />;
-                    })}
-                </div>
+                {(isForm && !isForm.final) ? null : this.renderScoreRow()}
                 {isForm ? this.renderScoreForm() : null}
             </div>
         );
@@ -53,7 +60,7 @@ MetricDisplay.propTypes = {
             }).isRequired
         ).isRequired,
     }).isRequired,
-    isForm: PropTypes.bool,
+    isForm: PropTypes.object,
 };
 
 export default MetricDisplay;
