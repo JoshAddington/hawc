@@ -310,7 +310,6 @@ class RoBEdit(BaseDetail):
     def get_object(self, **kwargs):
         # either project managers OR the author can edit/view.
         obj = super(RoBEdit, self).get_object(**kwargs)
-        print(self.assessment.user_can_edit_assessment(self.request.user))
         if obj.author != self.request.user and \
             not self.assessment.user_can_edit_assessment(self.request.user):
             raise PermissionDenied
