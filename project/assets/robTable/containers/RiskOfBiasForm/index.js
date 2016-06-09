@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchStudyIfNeeded, submitFinalRiskOfBiasScores } from 'robTable/actions';
+import { fetchStudyIfNeeded, submitRiskOfBiasScores } from 'robTable/actions';
 import DomainDisplay from 'robTable/components/DomainDisplay';
 import Loading from 'shared/components/Loading';
 import ScrollToMessageBox from 'robTable/components/ScrollToMessageBox';
 import ScrollToErrorBox from 'robTable/components/ScrollToErrorBox';
-import './ConflictResolutionForm.css';
+import './RiskOfBiasForm.css';
 
 
-class ConflictResolutionForm extends Component {
+class RiskOfBiasForm extends Component {
 
     componentWillMount(){
         this.props.dispatch(fetchStudyIfNeeded());
@@ -26,7 +26,7 @@ class ConflictResolutionForm extends Component {
                     score: form.refs.score.refs.select.value };
             });
         }));
-        this.props.dispatch(submitFinalRiskOfBiasScores({scores}));
+        this.props.dispatch(submitRiskOfBiasScores({scores}));
     }
 
     handleCancel(e){
@@ -74,4 +74,4 @@ function mapStateToProps(state){
 }
 
 
-export default connect(mapStateToProps)(ConflictResolutionForm);
+export default connect(mapStateToProps)(RiskOfBiasForm);

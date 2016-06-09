@@ -28,7 +28,7 @@ DomainDisplay.propTypes = {
         key: PropTypes.string.isRequired,
         values: PropTypes.array.isRequired,
     }).isRequired,
-    isForm: PropTypes.bool,
+    isForm: PropTypes.object,
 };
 
 export default DomainDisplay;
