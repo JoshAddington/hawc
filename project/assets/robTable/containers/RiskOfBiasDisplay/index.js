@@ -19,14 +19,15 @@ class RiskOfBiasDisplay extends Component {
     }
 
     render(){
-        let { itemsLoaded, active } = this.props;
+        let { itemsLoaded, active, display } = this.props;
         if (!itemsLoaded) return <Loading />;
 
         return (
             <div className='riskofbias-display'>
                 {_.map(active, (domain) => {
                     return <DomainDisplay key={domain.key}
-                                       domain={domain} />;
+                                       domain={domain}
+                                       display={display} />;
                 })}
                 <ShowAll handleClick={this.handleShowAllClick.bind(this)} />
             </div>
@@ -38,6 +39,7 @@ function mapStateToProps(state){
     return {
         itemsLoaded: state.study.itemsLoaded,
         active: state.study.active,
+        display: state.config.display,
     };
 }
 

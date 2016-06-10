@@ -8,10 +8,17 @@ import './MetricDisplay.css';
 class MetricDisplay extends Component {
 
     renderScoreRow(){
-        let { metric, isForm } = this.props,
-            displayScores = isForm ?
-                _.filter(metric.values, (score) => {return !score.final;}) :
-                metric.values;
+        let { metric, isForm, display } = this.props,
+            displayScores;
+
+        if (isForm){
+            displayScores = _.filter(metric.values, (score) => {return !score.final;});
+        } else if (display === 'all') {
+            displayScores = metric.values;
+        } else if (display === 'final') {
+            displayScores = _.filter(metric.values, (score) => {return score.final;});
+        }
+
         return (
             <div className='score-row'>
             {_.map(displayScores, (score) => {
@@ -61,6 +68,7 @@ MetricDisplay.propTypes = {
         ).isRequired,
     }).isRequired,
     isForm: PropTypes.object,
+    display: PropTypes.string,
 };
 
 export default MetricDisplay;

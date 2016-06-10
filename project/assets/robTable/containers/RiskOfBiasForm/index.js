@@ -35,7 +35,7 @@ class RiskOfBiasForm extends Component {
     }
 
     render(){
-        let { itemsLoaded, riskofbiases, isForm, error, message } = this.props;
+        let { itemsLoaded, riskofbiases, isForm, error, message, display } = this.props;
         if (!itemsLoaded) return <Loading />;
 
         return (
@@ -48,7 +48,8 @@ class RiskOfBiasForm extends Component {
                         return <DomainDisplay key={domain.key}
                                            ref={domain.key}
                                            domain={domain}
-                                           isForm={isForm} />;
+                                           isForm={isForm}
+                                           display={display} />;
                     })}
                     <button className='btn btn-primary'
                             onClick={this.submitForm.bind(this)}>
@@ -67,6 +68,7 @@ function mapStateToProps(state){
         itemsLoaded: state.study.itemsLoaded,
         riskofbiases: state.study.riskofbiases,
         isForm: state.config.isForm,
+        display: state.config.display,
         cancelUrl: state.config.cancelUrl,
         error: state.study.error,
         message: state.study.message,

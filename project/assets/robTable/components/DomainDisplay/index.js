@@ -6,7 +6,7 @@ import MetricDisplay from 'robTable/components/MetricDisplay';
 class DomainDisplay extends Component {
 
     render(){
-        let { domain, isForm } = this.props;
+        let { domain, isForm, display } = this.props;
         return (
             <div>
                 <hr/>
@@ -15,7 +15,8 @@ class DomainDisplay extends Component {
                     return <MetricDisplay key={metric.key}
                                           ref={_.last(metric.values).id}
                                           metric={metric}
-                                          isForm={isForm}/>;
+                                          isForm={isForm}
+                                          display={display}/>;
                 })}
             </div>
         );
@@ -29,6 +30,7 @@ DomainDisplay.propTypes = {
         values: PropTypes.array.isRequired,
     }).isRequired,
     isForm: PropTypes.object,
+    display: PropTypes.string,
 };
 
 export default DomainDisplay;
