@@ -16,12 +16,12 @@ class ScoreBar extends Component {
     }
 
     render() {
-        let { description, score } = this.props,
+        let { description, score, className } = this.props,
         // Not Reported score is 10. If Not reported, set barWidth to 15 instead of 250.
             barWidth = score === 10 ? 15 : d3.max([d3.round(score / 4 * 100, 2), 15]);
 
         return (
-            <div className='score-bar'>
+            <div className={`score-bar ${className}`}>
                 <VelocityComponent animation={{opacity: 1, width: `${barWidth}%`}}
                                    runOnMount={true}
                                    duration={1000}>
